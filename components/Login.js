@@ -1,98 +1,10 @@
-// import React, { useState, Component } from 'react';
-// import { View, Text } from 'react-native';
-// import { TextInput, Button } from 'react-native-paper';
-// import firebase from 'firebase';
-
-// export class Login extends Component {
-//     constructor(props) {
-//         super(props);
-
-//         this.state = {
-//             phone: '',
-//             password: ''
-//         }
-
-//         this.onSignUp = this.onSignUp.bind(this)
-//     };
-
-//     onSignUp() {
-//         // const { phone, password } = this.state;
-
-//         // firebase.auth().signInWithPhoneNumber(phone)
-//         //     .then((result)  => console.log
-//         //     (result))
-//         //     .catch((err) => console.log(err))
-
-
-//             const [confirm, setConfirm] = useState(null);
-
-//             const [code, setCode] = useState('');
-          
-//             // Handle the button press
-//             async function signInWithPhoneNumber(phoneNumber) {
-//               const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-//               setConfirm(confirmation);
-//             }
-          
-//             async function confirmCode() {
-//               try {
-//                 await confirm.confirm(code);
-//               } catch (error) {
-//                 console.log('Invalid code.');
-//               }
-//             }
-          
-//             if (!confirm) {
-//               return (
-//                 <Button
-//                   title="Phone Number Sign In"
-//                   onPress={() => signInWithPhoneNumber('+1 650-555-3434')}
-//                 />
-//               );
-//             }
-          
-//             return (
-//               <>
-//                 <TextInput value={code} onChangeText={text => setCode(text)} />
-//                 <Button title="Confirm Code" onPress={() => confirmCode()} />
-//               </>
-//             );
-
-//         // firebase.auth().createUserWithEmailAndPassword(phone, password)
-//         //     .then((result)  => console.log
-//         //     (result))
-//         //     .catch((err) => console.log(err))
-//     }
-
-//     render() {
-//         return(
-//             <View>
-//                 <TextInput placeholder='phone number' onChangeText={(phone)=>this.setState({phone})} />
-//                 <TextInput placeholder='password' onChangeText={(password)=>this.setState({password})} />
-//                 <Button onPress={()=>this.onSignUp()} mode='contained'>Sign Up</Button>
-//             </View>
-//         )
-//     }
-// };
-
-// export default Login
-
 import * as React from 'react';
-import { Text, View, TouchableOpacity, Platform } from 'react-native';
+import { useEffect } from 'react';
+import { Text, View, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import firebase from 'firebase';
-
-
-// Initialize Firebase JS SDK
-// https://firebase.google.com/docs/web/setup
-/*try {
-  firebase.initializeApp({
-    ...
-  });
-} catch (err) {
-  // ignore app already initialized error in snack
-}*/
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App({ navigation }) {
   const recaptchaVerifier = React.useRef(null);
@@ -124,6 +36,7 @@ export default function App({ navigation }) {
         onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
       />
       <Button
+        style={styles.button}
         disabled={!phoneNumber}
         onPress={async () => {
           // The FirebaseRecaptchaVerifierModal ref implements the
@@ -152,6 +65,7 @@ export default function App({ navigation }) {
         onChangeText={setVerificationCode}
       />
       <Button
+        style={styles.button}
         disabled={!verificationId}
         onPress={async () => {
           try {
@@ -161,6 +75,16 @@ export default function App({ navigation }) {
             );
             await firebase.auth().signInWithCredential(credential);
             showMessage({ text: 'Phone authentication successful 👍' });
+            const storeData = async () => {
+              try {
+                await AsyncStorage.setItem('registered', 'true');
+                await AsyncStorage.setItem('phone', phoneNumber)
+              }
+              catch(err) {
+
+              }
+            }
+            storeData();
             navigation.navigate('Main')
           } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' });
@@ -191,3 +115,11 @@ export default function App({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    marginTop: 60,
+    padding: 20,
+    backgroundColor: '#f2bd49',
+  },
+})

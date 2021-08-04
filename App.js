@@ -1,13 +1,19 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider } from 'react-native-paper';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Notification from './components/Notification';
 import Main from './components/Main';
+import Contact from './components/Contact'
+import Help from './components/Help'
+import Chat from './components/Chat'
+import Reminder from './components/Reminder'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAp63YhaTKD8qC7cM6ouQV1BVvRlxDAwoY",
@@ -24,14 +30,28 @@ firebase.initializeApp(firebaseConfig)
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [registered, setRegistered] = useState(false);
+
+  const getData = async() => {
+    try {
+      const value = await AsyncStorage.getItem("registered");
+      setRegistered(true);
+    }
+    catch(err) {
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  })
   return(
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Main'>
-            <Stack.Screen name='Home' component={Welcome} />
-            <Stack.Screen name='Login' component={Login} />
-            <Stack.Screen name='Notification' component={Notification} />
-            <Stack.Screen name='Main' component={Main} />
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Reminder">
+          <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="Reminder" component={Reminder} />
         </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
   );
-};
+}
