@@ -14,6 +14,10 @@ import Contact from './components/Contact'
 import Help from './components/Help'
 import Chat from './components/Chat'
 import Reminder from './components/Reminder'
+import MentalHealth from './components/MentalHealth'
+import Game from './components/Game'
+import Meditation from './components/Meditation'
+import PlayScreen from './components/PlayScreen'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAp63YhaTKD8qC7cM6ouQV1BVvRlxDAwoY",
@@ -46,11 +50,18 @@ export default function App() {
   })
   return(
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="Reminder">
+        <Stack.Navigator initialRouteName="Main">
           <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Main" component={Main} />
           <Stack.Screen name="Reminder" component={Reminder} />
+          <Stack.Screen name="Contact" component={Contact} />
+          <Stack.Screen name="Help" component={Help} />
+          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="MentalHealth" component={MentalHealth} />
+          <Stack.Screen name="Game" component={Game} />
+          <Stack.Screen name="Meditation" component={Meditation} />
+          <Stack.Screen name="PlayScreen" component={PlayScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );

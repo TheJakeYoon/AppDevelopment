@@ -1,0 +1,46 @@
+import React from 'react';
+import { Text, View, StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
+
+export default function MentalHealth ({navigation}){
+return(
+    <View style = {styles.container}>
+    <Button labelStyle={styles.buttonText} style={styles.firstButton} mode = 'contained'onPress= {() => navigation.navigate('PlayScreen')}>
+        Song1
+    </Button>
+    <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('PlayScreen')}>
+        Song2
+    </Button>
+    <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('PlayScreen')}>
+        Song3
+    </Button>
+    <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('PlayScreen')}>
+        Song4
+    </Button>
+    <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('PlayScreen')}>
+        Song5
+    </Button>
+    
+    </View>
+);
+}
+
+const styles = StyleSheet.create ({
+container: {
+    flex: 1,
+    backgroundColor: '#62baf5',
+},
+button: {
+    marginTop: 60,
+    padding: 20,
+    backgroundColor: '#f2bd49',
+},
+firstButton: {
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#f2bd49',
+},
+buttonText: {
+    color: '#000000',
+}
+})

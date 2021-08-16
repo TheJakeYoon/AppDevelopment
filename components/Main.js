@@ -35,7 +35,7 @@ export default function Main ({navigation}) {
         <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('Help')}>
             Request Help
         </Button>
-        <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('Focus')}>
+        <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('MentalHealth')}>
             Cozy Relaxed Warm
         </Button>
         </View>
