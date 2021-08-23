@@ -1,28 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
 export default function Main ({navigation}) {
-    const [registered, setRegistered] = useState(false);
-    const getData = async() => {
-        try {
-            await AsyncStorage.setItem("registered", true);
-            const value = await AsyncStorage.getItem("registered");
-            setRegistered(true);
-        }
-        catch(err) {
-        }
-      };
-
-    useEffect(() => {
-        getData();
-    });
+    //AsyncStorage.clear();
 
     return(
         <View style = {styles.container}>
-        <Text>{registered.toString()}</Text>
         <Button labelStyle={styles.buttonText} style={styles.firstButton} mode = 'contained'onPress= {() => navigation.navigate('Reminder')}>
             Prescription Reminder
         </Button>

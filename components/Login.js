@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import { Text, View, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function App({ navigation }) {
+export default function Login({ navigation }) {
   const recaptchaVerifier = React.useRef(null);
   const [phoneNumber, setPhoneNumber] = React.useState();
   const [verificationId, setVerificationId] = React.useState();
@@ -75,15 +76,23 @@ export default function App({ navigation }) {
             );
             await firebase.auth().signInWithCredential(credential);
             showMessage({ text: 'Phone authentication successful 👍' });
+            //const auth = firebase.auth();
+            const firestore = firebase.firestore();
+            //const user = useAuthState(auth);
+            const users = firestore.collection('users');
+            const addUser = async () => {
+              await users.add({phoneNumber : phoneNumber.toString()});
+            }
             const storeData = async () => {
               try {
                 await AsyncStorage.setItem('registered', 'true');
-                await AsyncStorage.setItem('phone', phoneNumber)
+                await AsyncStorage.setItem('phone', phoneNumber.toString())
               }
               catch(err) {
-
+                alert(err)
               }
             }
+            addUser();
             storeData();
             navigation.navigate('Main')
           } catch (err) {

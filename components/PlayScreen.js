@@ -7,13 +7,11 @@ export default function App() {
     const [paused, setPaused] = React.useState(true);
 
     async function playSound() {
-        console.log('Loading Sound');
         const { sound } = await Audio.Sound.createAsync(
         require('../assets/Hello.mp3')
         );
         setSound(sound);
 
-        console.log('Playing Sound');
         await sound.playAsync(); 
     };
 
@@ -30,7 +28,6 @@ export default function App() {
   React.useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading Sound');
           sound.unloadAsync(); }
       : undefined;
   }, [sound]);
@@ -47,12 +44,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#62baf5'
+        backgroundColor: '#62baf5',
+        justifyContent: 'center',
     },
     button: {
         top: "70%",
         margin: 25,
-        width: 200,
+        width: 150,
         height: 100,
         borderRadius: 30,
         backgroundColor: '#f2bd49',

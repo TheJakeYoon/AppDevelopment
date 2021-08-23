@@ -4,10 +4,15 @@ import { Button, TextInput } from 'react-native-paper';
 import firebase from 'firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Chat({navigation}){
     const [text, setText] = useState();
-    const phone = "12345";
+    const [phone, setPhone] = useState('');
+    const getPhoneNumber = async () => {
+        phoneNumber = await AsyncStorage.getItem('phone');
+        setPhone(phoneNumber);
+    }
 
     const auth = firebase.auth();
     const firestore = firebase.firestore();
@@ -16,7 +21,7 @@ export default function Chat({navigation}){
     function Chatroom(){
         const messages = firestore.collection('helpchat');
         const query = messages.orderBy('time').limit(100);
-        const [msgs] = useCollectionData(query, { phone: '12345'});
+        const [msgs] = useCollectionData(query, { phone: phone});
 
         return(
             <View style={styles.textContainer}>
@@ -32,7 +37,7 @@ export default function Chat({navigation}){
         const messages = firestore.collection('helpchat');
     
         await messages.add({
-            phone: "12345",
+            phone: phone,
             text: text,
             time: firebase.firestore.FieldValue.serverTimestamp(),
         })

@@ -17,9 +17,6 @@ export default function Help ({navigation}) {
         <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('Chat')}>
             Chat
         </Button>
-        <Button labelStyle={styles.buttonText} style={styles.button} mode = 'contained'onPress= {() => navigation.navigate('Chat')}>
-            Ride
-        </Button>
         </View>
     );
 };

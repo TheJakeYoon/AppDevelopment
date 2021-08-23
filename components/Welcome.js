@@ -1,32 +1,16 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { ImageBackground, View, StyleSheet, Text } from 'react-native';
+import { ImageBackground, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 export default function Welcome({ navigation }) {
-  const [registered, setRegistered] = useState(false);
-  useEffect(() => {
-    const data = async () => {
-      await AsyncStorage.setItem("registered", true);
-    }
-    data();
-  })
    return (
-    <View style={styles.container}>
-    <ImageBackground source={require('../assets/main.png')} resizeMode="cover" style={styles.image}>
-      <Button mode='contained' style={styles.button} onPress={()=>{
-        if(registered){
-          navigation.navigate('Main');
-        }
-        else {
-          navigation.navigate('Login')
-        }
-        
-        }}
-        >Get Started</Button>
-    </ImageBackground>
-  </View>
+     <View style={styles.container}>
+      <ImageBackground source={require('../assets/main.png')} resizeMode="cover" style={styles.image}>
+        <Button mode='contained' style={styles.button} onPress={()=>{navigation.navigate('Login')}}>
+          Get Started</Button>
+      </ImageBackground>
+    </View>
+    
    );
 };
 
